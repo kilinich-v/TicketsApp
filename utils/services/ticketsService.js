@@ -1,11 +1,10 @@
-import { travelpayouts } from './config';
+import { tickets } from './config';
 
 const ticketsService = {
   getTickets: async params => {
-    const res = await travelpayouts.get(
-      '/prices/nearest-places-matrix',
+    const res = await tickets.get(`/prices/nearest-places-matrix`, {
       params
-    );
+    });
 
     try {
       return res.data;
@@ -15,4 +14,4 @@ const ticketsService = {
   }
 };
 
-export default ticketsService;
+export { ticketsService };

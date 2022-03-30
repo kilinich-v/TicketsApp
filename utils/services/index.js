@@ -1,1 +1,2 @@
-import ticketsService from './ticketsService';
+export * from './resourceService';
+export * from './ticketsService';
