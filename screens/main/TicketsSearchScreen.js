@@ -3,19 +3,21 @@ import {
   View,
   Text,
   SafeAreaView,
+  FlatList,
   StyleSheet,
   TextInput,
-  Button
+  TouchableHighlight
 } from 'react-native';
 // import DatePicker from 'react-native-date-picker';
 
 import TextInputCustom from '../../components/TextInputCustom';
+import ButtonCustom from '../../components/ButtonCustom';
 
-import { resourceService } from '../../utils/services';
+import { resourceService, ticketsService } from '../../utils/services';
 
 const TicketsSearchScreen = () => {
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
+  const [openDatePicker, setOpenDatePicker] = useState(false);
   const [cityFrom, setCityFrom] = useState('');
   const [cityTo, setCityTo] = useState('');
 
@@ -25,9 +27,24 @@ const TicketsSearchScreen = () => {
     console.log('res', res);
   }, []);
 
+  const handleSearch = async () => {
+    if (cityFrom && cityTo) {
+      const res = await ticketsService.getTickets({
+        origin: cityFrom,
+        destination: cityTo
+      });
+
+      if (res?.prices) {
+        console.log(res?.prices);
+      } else {
+        console.log(res?.error);
+      }
+    }
+  };
+
   return (
     <SafeAreaView>
-      <View>
+      <View style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}>
         <Text>Search</Text>
         <TextInputCustom
           placeholder={'From'}
@@ -42,16 +59,17 @@ const TicketsSearchScreen = () => {
 
         {/* <DatePicker
           modal
-          open={open}
+          open={openDatePicker}
           date={date}
           onConfirm={date => {
-            setOpen(false);
+            setOpenDatePicker(false);
             setDate(date);
           }}
           onCancel={() => {
-            setOpen(false);
+            setOpenDatePicker(false);
           }}
         /> */}
+        <ButtonCustom handlePress={handleSearch} />
       </View>
     </SafeAreaView>
   );

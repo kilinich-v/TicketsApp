@@ -4,7 +4,8 @@ import { palette } from '../../utils/styles';
 
 const styles = StyleSheet.create({
   fieldWrapper: {
-    margin: 20
+    marginTop: 10,
+    marginBottom: 10
   },
   title: {
     marginBottom: 5,
